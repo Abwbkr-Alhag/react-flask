@@ -1,18 +1,28 @@
-import { AccountCircle } from '@mui/icons-material';
+// Material UI Icons
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
-import { Checkbox, Box, Button, FormGroup, InputAdornment, Stack, TextField } from '@mui/material';
-import { Typography } from '@material-ui/core';
+// Mateiral UI Components
+import Checkbox from '@mui/material/Checkbox';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import FormGroup from '@mui/material/FormGroup';
+import InputAdornment from '@mui/material/InputAdornment';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+// React
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+// In-sourced imports
 import useDebounce from '../../hooks/useDebounce';
 import ValidateEmail from '../../utils/emailVerify';
 import ValidatePassword from '../../utils/passwordVerify';
 import httpClient from '../../utils/httpClient';
 import AuthContext, { AuthActionKind } from '../../context/AuthProvider';
-import Loading from '../../components/Loading/Loading';
+import Loading from '../../components/Loading';
 import useStyles from './LoginStyles';
 
-function Login() {
+const Login = () => {
   const classes = useStyles();
   
   const [emailError, setEmailError] = useState(false);

@@ -11,7 +11,7 @@ import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import useStyles from "./FooterStyles"
 
-function Footer() {
+const Footer = () => {
   const classes = useStyles();
 
   return (

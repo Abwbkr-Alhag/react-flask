@@ -11,7 +11,7 @@ import { useState } from "react";
 import RotatorImage from "./RotatorImage.tsx/RotatorImage";
 import useStyles from "./RotatorStyles";
 
-function Rotator() {
+const Rotator = () => {
     const classes = useStyles();
 
     const [activeSlide, setActiveSlide] = useState(1);

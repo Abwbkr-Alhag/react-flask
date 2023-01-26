@@ -21,3 +21,8 @@ class ApplicationConfig:
     SESSION_PERMANENT = False
     SESSION_USE_SIGNER = True
     SESSION_REDIS = redis.from_url("redis://127.0.0.1:6379")
+
+    S3_BUCKET = os.environ["AWS_BUCKET_NAME"]
+    S3_KEY = os.environ["AWS_ACCESS_KEY"]
+    S3_SECRET = os.environ["AWS_SECRET_KEY"]
+    S3_LOCATION = os.environ["AWS_REGION"]

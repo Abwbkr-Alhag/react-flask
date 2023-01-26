@@ -5,21 +5,35 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { CookiesProvider } from "react-cookie";
 import { AuthProvider } from './context/AuthProvider';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import StyledEngineProvider from '@mui/material/StyledEngineProvider'
+import { ShoppingCartProvider } from './context/ShoppingCartProvider';
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // 5 Minute Stale Time
+      staleTime: 1000 * 60 * 5
+    }
+  }
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <CookiesProvider>
-        <StyledEngineProvider injectFirst>
-          <App />
-        </StyledEngineProvider>
-      </CookiesProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <CookiesProvider>
+          <ShoppingCartProvider>
+            <StyledEngineProvider injectFirst>
+              <App />
+            </StyledEngineProvider>
+          </ShoppingCartProvider>
+        </CookiesProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

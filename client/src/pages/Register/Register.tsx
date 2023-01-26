@@ -1,19 +1,22 @@
+// Material UI Icons
 import { AccountCircle } from '@mui/icons-material';
 import KeyIcon from '@mui/icons-material/Key';
-import { Box, Button, FormGroup, InputAdornment, Stack, TextField } from '@mui/material';
-import { Typography } from '@material-ui/core';
+// Material UI Components
+import { Box, Button, FormGroup, InputAdornment, Stack, TextField, Typography } from '@mui/material';
+// React Components
 import { useEffect, useReducer, useState, useContext } from 'react';
 import { Link, useNavigate  } from 'react-router-dom';
+// Insourced Components
 import useDebounce from '../../hooks/useDebounce';
 import ValidateEmail from '../../utils/emailVerify';
 import ValidatePassword from '../../utils/passwordVerify';
-import Loading from './../../components/Loading/Loading';
+import Loading from './../../components/Loading';
 import httpClient from '../../utils/httpClient';
-import useStyles from './RegisterStyles';
 import { AuthActionKind } from '../../context/AuthProvider';
 import AuthContext from '../../context/AuthProvider';
+import useStyles from './RegisterStyles';
 
-function Register() {
+const Register = () => {
   const classes = useStyles();
   
   const [emailError, setEmailError] = useState(false);
@@ -48,6 +51,16 @@ function Register() {
       case registerActionKind.REGISTER:
         if (state.email.length === 0 || state.password.length === 0 || state.secondPassword.length === 0) {
           setErrorMsg("You must supply an email, a password, and confirm that password")
+          return {...state}
+        } else if (state.password.length <= 8) {
+          setErrorMsg("You must have an password that exceeds 8 characters")
+          return {...state}
+        } else if (!ValidateEmail(state.email)) {
+          setErrorMsg("You must supply a proper email")
+          return {...state}
+        } else if (Boolean(state.password.localeCompare(state.secondPassword))) {
+          setErrorMsg("The passwords supplied must be identical")
+          return {...state}
         }
         setLoading(true)
         httpClient.post("//localhost:5000/register", {

@@ -51,6 +51,10 @@ const useStyles = makeStyles((theme : Theme) => ({
     },
     cardSubtitle: {
         padding: '0 2rem',
+        height: '60px',
+        [theme.breakpoints.down('sm')]: {
+            height: 'auto',
+        }
     },
     cardButton: {
         color: '#000000',

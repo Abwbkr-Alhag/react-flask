@@ -1,38 +1,45 @@
-import AppBar from '@mui/material/AppBar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
+// Material UI Icons
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LoginIcon from '@mui/icons-material/Login';
-import Box from '@material-ui/core/Box';
-import InputBase from '@material-ui/core/InputBase';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Tooltip from '@material-ui/core/Tooltip';
-import Badge from '@material-ui/core/Badge';
+// Material UI Components
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import Box from '@mui/material/Box';
+import InputBase from '@mui/material/InputBase';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
+import Badge from '@mui/material/Badge';
+// React Imports
 import { useEffect, useState, useContext } from 'react';
-import SideDrawer from './components/SideDrawer';
 import { Link } from 'react-router-dom';
+// Insourced Imports
+import SideDrawer from './components/SideDrawer';
 import logo from "../../assets/logo.png";
-import useStyles from './NavBarStyles';
 import AuthContext, { auth, AuthActionKind } from '../../context/AuthProvider';
 import httpClient from '../../utils/httpClient';
+import useStyles from './NavBarStyles';
+import CartDrawer from './components/CartDrawer';
+import useShoppingCart from '../../context/ShoppingCartProvider';
 
-function NavBar() {
+const NavBar = () => {
   const classes = useStyles();
   const trigger = useScrollTrigger();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileView, setMobileView] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [anchorShop, setAnchorShop] = useState<null | HTMLElement>(null);
   const globalState = useContext(AuthContext);
+  const { cartQuantity, toggleCart } = useShoppingCart();
 
   const user = globalState.auth.user;
+  const admin = globalState.auth.isAdmin;
 
   useEffect(() => {
     if (windowWidth < 600) {
@@ -62,15 +69,7 @@ function NavBar() {
     setAnchorEl(null);
   };
 
-  const handleShopClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorShop(event.currentTarget);
-  };
-  const handleShopClose = () => {
-    setAnchorShop(null);
-  };
-
   useEffect(() => {
-    setAnchorShop(null);
     setAnchorEl(null);
   }, [trigger])
   
@@ -111,38 +110,11 @@ function NavBar() {
                 Home
               </Typography>
             </Link>
-            <Box className={classes.links} onClick={handleShopClick}>
+            <Link className={classes.links} to={"/shop"}>
               <Typography>
                 Shop
               </Typography>
-            </Box>
-            <Menu
-              anchorEl={anchorShop}
-              id="account-menu"
-              open={Boolean(anchorShop)}
-              onClose={handleShopClose}
-              disableScrollLock={true}
-              getContentAnchorEl={null}
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-              PopoverClasses={{
-                paper: classes.menu,
-              }}
-            > <Stack direction="row" spacing={2} sx={{ml: 2}}>
-                <Link className={classes.link} to="/shop/:all">
-                  <MenuItem className={classes.menuItem} onClick={handleShopClose}>Shop All</MenuItem>
-                </Link>
-                <Link className={classes.link} to="/shop/:ring">
-                  <MenuItem className={classes.menuItem} onClick={handleShopClose}>Rings</MenuItem>
-                </Link>
-                <Link className={classes.link} to="/shop/:pendant">
-                  <MenuItem className={classes.menuItem} onClick={handleShopClose}>Pendants</MenuItem>
-                </Link>
-                <Link className={classes.link} to="/shop/:earring">
-                  <MenuItem className={classes.menuItem} onClick={handleShopClose}>Earrings</MenuItem>
-                </Link>
-              </Stack>
-            </Menu>
+            </Link>
             <Link className={classes.links} to={"/contact"}>
               <Typography>
                 Contact
@@ -177,12 +149,12 @@ function NavBar() {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                   disableScrollLock={true}
-                  getContentAnchorEl={null}
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                   transformOrigin={{ vertical: 'top', horizontal: 'center' }}
                 >
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
                   <MenuItem onClick={handleClose}>My account</MenuItem>
+                  { admin && <Link className={classes.link} to="/admin"><MenuItem onClick={handleClose}>Admin View</MenuItem></Link>}
                   <MenuItem onClick={logout}>Logout</MenuItem>
                 </Menu>
               </>
@@ -193,12 +165,13 @@ function NavBar() {
               </Link>
             </Tooltip>
           }
-          <Badge badgeContent={111} max={99} color="secondary" overlap="rectangular">
-            <ShoppingCartIcon style={{cursor:'pointer'}} fontSize="large"/>
+          <Badge badgeContent={cartQuantity} max={99} color="secondary" overlap="rectangular">
+            <ShoppingCartIcon onClick={toggleCart} style={{cursor:'pointer'}} fontSize="large"/>
           </Badge>
         </Stack>
       </AppBar>
       <SideDrawer mobileOpen={mobileOpen} setMobileOpen={setMobileOpen}/>
+      <CartDrawer/>
     </>
   )
 }

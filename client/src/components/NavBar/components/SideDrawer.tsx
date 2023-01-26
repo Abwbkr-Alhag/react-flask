@@ -1,18 +1,23 @@
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-import { Link as MuiLink } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
-import { Link } from "react-router-dom";
-import logo from "../../../assets/logo.png";
-import GitHubIcon from '@mui/icons-material/GitHub';
+// Material UI Icons
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import HomeIcon from '@mui/icons-material/Home';
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import StoreIcon from '@mui/icons-material/Store';
+// Material UI Components
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { Link as MuiLink } from "@mui/material";
+// React
+import { Link } from "react-router-dom";
+import { FC } from 'react';
+// In-sourced components
+import logo from "../../../assets/logo.png";
 import useStyles from './SideDrawerStyles';
 
 interface sideDrawerProps {
@@ -20,7 +25,10 @@ interface sideDrawerProps {
     setMobileOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function SideDrawer({ mobileOpen, setMobileOpen }:sideDrawerProps) {
+const SideDrawer:FC<sideDrawerProps> = ({
+    mobileOpen, setMobileOpen
+}) => {
+    
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
     };
@@ -43,24 +51,9 @@ function SideDrawer({ mobileOpen, setMobileOpen }:sideDrawerProps) {
                         <Typography variant="h6">Home</Typography>
                     </Link>
                     <Divider/>
-                    <Link className={classes.link} to="/shop/:all">
+                    <Link className={classes.link} to="/shop">
                         <StoreIcon fontSize="large"/>
-                        <Typography variant="h6">Shop All</Typography>
-                    </Link>
-                    <Divider/>
-                    <Link className={classes.link} to="/shop/ring">
-                        <HomeIcon fontSize="large"/>
-                        <Typography variant="h6">Rings</Typography>
-                    </Link>
-                    <Divider/>
-                    <Link className={classes.link} to="/shop/pendant">
-                        <HomeIcon fontSize="large"/>
-                        <Typography variant="h6">Pendants</Typography>
-                    </Link>
-                    <Divider/>
-                    <Link className={classes.link} to="/shop/earring">
-                        <HomeIcon fontSize="large"/>
-                        <Typography variant="h6">Earrings</Typography>
+                        <Typography variant="h6">Shop</Typography>
                     </Link>
                     <Divider/>
                     <Link className={classes.link} to="/contact">

@@ -1,4 +1,3 @@
-// import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Layout from "./pages/Layout";
@@ -8,8 +7,9 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import RequireAdmin from "./components/auth/requiresAdmin";
 import Shop from "./pages/Shop/Shop";
+import Product from "./pages/Product";
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -18,7 +18,8 @@ function App() {
           <Route element={<RequireAdmin />}>
             <Route path="/admin" element={<Admin />}/>
           </Route>
-          <Route path="/shop/:category" element={<Shop />}/>
+          <Route path="/shop" element={<Shop />}/>
+          <Route path="/shop/:id" element={<Product />}/>
           <Route path="*" element={<NotFound />}/>
         </Route>
         <Route path="/login" element={<Login />}/>

@@ -1,20 +1,31 @@
 import { Button, Container, Divider, Stack, Typography } from '@mui/material';
-import assorted from './../../../../assets/images/assorted.jpg';
 import Slide from './Slide/Slide';
 import trueMod from '../../../../utils/mod';
 import { useTheme } from 'css-vars-hook';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import useStyles from './CarouselStyles';
 
-function Carousel() {
+interface CarouselItem {
+    name: string,
+    category: string,
+    price: number,
+    metal: string,
+    image_arr: string[],
+}
+
+interface CarouselProps {
+    carouselItems: CarouselItem[]
+}
+
+const Carousel:FC<CarouselProps> = ({
+    carouselItems
+}) => {
     const classes = useStyles();
     const [activeSlide, setActiveSlide] = useState(0);
     const [itemsPerScreen, setItemsPerScreen] = useState(0);
     const theme = { translateX: activeSlide, itemsPerScreen: itemsPerScreen };
     const { setRef: setSlideRef, setVariable: setSlideVariable} = useTheme(theme);
     const { setRef: setItemsRef, setVariable: setItemsVariable} = useTheme(theme);
-
-    const arr = [0, 1, 2, 3, 4, 5, 6, 7];
     
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -32,7 +43,7 @@ function Carousel() {
             setItemsPerScreen(5)
             setItemsVariable('itemsPerScreen', 5)
         }
-    }, [windowWidth])
+    }, [windowWidth, setItemsVariable])
     
 
     const setWindow = () => {
@@ -47,29 +58,29 @@ function Carousel() {
     }, [])
 
     function moveLeft() {
-        setActiveSlide(trueMod(activeSlide - 1, arr.length - itemsPerScreen + 1))
+        setActiveSlide(trueMod(activeSlide - 1, carouselItems.length - itemsPerScreen + 1))
         setSlideVariable('translateX', activeSlide);
     }
 
     function moveRight() {
-        setActiveSlide(trueMod(activeSlide + 1, arr.length - itemsPerScreen + 1))
+        setActiveSlide(trueMod(activeSlide + 1, carouselItems.length - itemsPerScreen + 1))
         setSlideVariable('translateX', activeSlide);
     }
     
     useEffect(() => {
-        setActiveSlide(trueMod(activeSlide, arr.length - itemsPerScreen + 1))
+        setActiveSlide(trueMod(activeSlide, carouselItems.length - itemsPerScreen + 1))
         setSlideVariable('translateX', activeSlide);
-    }, [itemsPerScreen, activeSlide, arr.length, setSlideVariable])
+    }, [itemsPerScreen, activeSlide, carouselItems.length, setSlideVariable])
 
-    const slideItems = arr.map((_, index) =>
+    const slideItems = carouselItems.map((item, index) =>
         <Slide 
-        img={assorted} 
-        title="Shrimp and Chorizo Paella" 
+        img={item.image_arr[0]} 
+        title={item.name}
+        metal={item.metal}
+        price={item.price}
         desc="This impressive paella is a perfect party dish and a fun meal to cook
         together with your guests. Add 1 cup of frozen peas along with the mussels,
         if you like." 
-        index={index} 
-        activeSlide={activeSlide} 
         itemsPerScreen={itemsPerScreen}
         setSlideRef={setSlideRef} 
         setItemsRef={setItemsRef} 

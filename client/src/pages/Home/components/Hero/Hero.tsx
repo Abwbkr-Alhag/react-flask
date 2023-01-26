@@ -3,7 +3,7 @@ import black from './../../../../assets/images/black.jpg';
 import { Button, ImageList, ImageListItem, Stack, Typography } from "@mui/material"
 import useStyles from './HeroStyles';
 
-function Hero() {
+const Hero = () => {
     const classes = useStyles();
 
     return (

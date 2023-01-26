@@ -1,10 +1,10 @@
 import { Button, Slide, Stack, Typography } from "@mui/material"
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import useStyles from "./RotatorImageStyles";
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
   
 
-interface rotatorImageProps {
+interface RotatorImageProps {
     index: number,
     img: string,
     activeSlide: number,
@@ -12,7 +12,7 @@ interface rotatorImageProps {
     subtitle: string,
 }
 
-function RotatorImage({ index, img, activeSlide, title, subtitle}:rotatorImageProps):JSX.Element {
+const RotatorImage:FC<RotatorImageProps> = ({ index, img, activeSlide, title, subtitle}) => {
     const classes = useStyles();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const containerRef = useRef(null);
