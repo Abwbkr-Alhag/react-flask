@@ -10,7 +10,6 @@ import { useQuery } from 'react-query';
 import { Link, useParams } from 'react-router-dom';
 import { useTheme } from 'css-vars-hook';
 import httpClient from '../utils/httpClient';
-// import Loading from '../components/Loading';
 import formatter from '../utils/currencyFormat';
 import useShoppingCart from '../context/ShoppingCartProvider';
 
@@ -49,8 +48,11 @@ const Product:FC = () => {
     const [imageIndex, setImageIndex] = useState<number>(0);
     const { increaseCartQuantity } = useShoppingCart();
     const { id } = useParams();
+    // CSS Variables, in order to set css variables using state we need these variables,
+    // SetRef sets the DOM object to have its css changed and setVariable edits its value
     const theme = { translateX: imageIndex };
     const { setRef, setVariable} = useTheme(theme);
+    // URL id Parameter
     const itemID = parseInt(id?.substring(1) as string)
 
     const StyledThumbImage = styled("img")(({ theme }) => ({

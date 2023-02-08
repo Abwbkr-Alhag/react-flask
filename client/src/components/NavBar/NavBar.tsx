@@ -1,6 +1,5 @@
 // Material UI Icons
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LoginIcon from '@mui/icons-material/Login';
@@ -11,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Box from '@mui/material/Box';
-import InputBase from '@mui/material/InputBase';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
@@ -27,6 +25,7 @@ import httpClient from '../../utils/httpClient';
 import useStyles from './NavBarStyles';
 import CartDrawer from './components/CartDrawer';
 import useShoppingCart from '../../context/ShoppingCartProvider';
+import Search from './components/Search';
 
 const NavBar = () => {
   const classes = useStyles();
@@ -65,6 +64,7 @@ const NavBar = () => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -128,15 +128,7 @@ const NavBar = () => {
           </Box>
         </>
         }
-        <Box className={classes.search}>
-          <SearchIcon className={classes.searchIcon} sx={{cursor:'pointer'}}/>
-          <InputBase
-            placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }}
-            className={classes.input}
-            required
-          />
-        </Box>
+        <Search trigger={trigger}/>
         <Stack direction="row" spacing={1} sx={{mr:'8px'}}>
           { user
             ? <>

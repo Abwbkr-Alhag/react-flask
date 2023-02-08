@@ -15,17 +15,6 @@ const CartDrawer:FC = () => {
 
     const { cartItems, isOpen, toggleCart, getTotalPrice, clearCart } = useShoppingCart();
 
-    // const cartItemsMapped = cartItems.map((item, index) => (
-
-    //     <>
-    //         <Collapse key={item.itemID + item.size}>
-    //             <CartItem id={item.itemID} name={item.name} price={item.price} itemQuantity={item.itemQuantity} maxQuantity={item.maxQuantity} metal={item.metal} category={item.category} size={item.size} cover={item.cover}/>
-    //             {index !== (cartItems.length - 1) && <Divider/> }
-    //         </Collapse>
-    //     </>
-
-    // ))
-
     return (
         <Drawer 
             ModalProps={{ keepMounted: true }} 

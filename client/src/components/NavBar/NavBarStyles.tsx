@@ -14,28 +14,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginLeft: '8px',
         padding: '8px',
     },
-    search: {
-        display: 'flex',
-        flexDirection: 'row-reverse',
-        alignItems: 'center',
-        padding: '2.5px 2.5px 2.5px 10px',
-        borderRadius: '4px',
-        marginRight: theme.spacing(1),
-        marginLeft: 'auto',
-        transition: theme.transitions.create('width'),
-        [theme.breakpoints.up('sm')]: {
-            width: '20ch',
-            backgroundColor:  '#8D1A1A',
-            '&:hover,&:focus-within': {
-                width: '25ch',
-                backgroundColor: '#932626',
-            },
-        },
-        [theme.breakpoints.down('xs')]: {
-            width: '100%',
-            backgroundColor: '#932626'
-        }
-    },
     navLinks: {
         display: 'flex',
         flexDirection: 'row',
@@ -56,14 +34,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         '&:hover': {
             backgroundColor: '#700000',
         },
-    },
-    input: {
-        [theme.breakpoints.down('xs')]: {
-            width: '100%',
-        }
-    },
-    searchIcon: {
-        transition: theme.transitions.create('color'),
     },
     logoWrapper: {
         marginRight: theme.spacing(2),

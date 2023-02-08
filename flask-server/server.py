@@ -63,6 +63,21 @@ def get_home_products():
     
     return jsonify(product_arr)
 
+@app.route("/search", methods=["POST"])
+def search_products():
+    search_name = request.json["search_name"]
+    results = Products.query.filter(Products.name.like(f"{search_name}%")).limit(3).all()
+    results = [result.product_rep() for result in results]
+    for result in results:
+        response = s3.get_object(Bucket=os.environ["AWS_BUCKET_NAME"], Key='images/' + result["name"] + '/cover')
+        image_data = response['Body'].read()
+        image_format = imghdr.what(None, h=image_data)
+        base64_image = base64.b64encode(image_data).decode('utf-8')
+        base64_image = f"data:image/{image_format};base64,{base64_image}"
+        result["cover"] = base64_image
+        
+    return jsonify(results)
+
 @app.route("/shop", methods=["POST"])
 def query_products():
     base_query = Products.query
